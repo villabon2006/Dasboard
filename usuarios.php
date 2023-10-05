@@ -51,10 +51,10 @@
           <i class="fa-solid fa-gear"></i>
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-          <a href="perfil.html" class="dropdown-item">
+          <a href="perfil.php" class="dropdown-item">
             <i class="fa-solid fa-user"></i>Perfil
           </a>
-          <a href="#" class="dropdown-item dropdown-footer">Salir</a>
+          <a href="index.html" class="dropdown-item dropdown-footer">Salir</a>
         </div>
       </li>
     </ul>
@@ -85,7 +85,7 @@
             </a>
           </li>
           <li class="nav-item menu-open">
-            <a href="jsgrid.html" class="nav-link active">
+            <a href="usuarios.php" class="nav-link active">
               <i class="fa-solid fa-users"></i>
               <p>
                 Usuarios
@@ -116,17 +116,17 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Usuarios</h1>
+            <h1>Alumnos</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Usuarios</li>
+              <li class="breadcrumb-item active">Alumnos</li>
             </ol>
           </div>
         </div>
         <button class="btn btn-primary" data-toggle="modal" data-target="#ventanamodal">
-          Registrar Usuario
+          Registrar Alumno
         </button>
       </div><!-- /.container-fluid -->
     </section>
@@ -139,7 +139,7 @@
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-                <h4 class="modal-title">Registro de usuarios</h4>
+                <h4 class="modal-title">Registro de Estudiantes</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -153,27 +153,72 @@
                       <div class="col-md-6">
                         <div class="form-grup">
                           <label for="exampleInputNombres">Nombres</label>
-                          <input type="text" class="form-control" id="exampleInputNombres" placeholder="Escribir nombres">
+                          <input type="text" class="form-control" id="exampleInputNombres" placeholder="Escribir nombres" name="nombres">
                         </div>
                       </div>
 
                       <div class="col-md-6">
                         <div class="form-grup">
                           <label for="exampleInputApellidos">Apellidos</label>
-                          <input type="text" class="form-control" id="exampleInputApellidos" placeholder="Escribir apellidos">
+                          <input type="text" class="form-control" id="exampleInputApellidos" placeholder="Escribir apellidos" name="apellidos">
                         </div>
                       </div>
                     </div>
 
+                    <div class="col-md-12">
+                    <div class="form-grup">
+                  <select class="form-select" name="tipo_documento">
+                    <option selected disabled>tipo de documento</option>
+                    <?php
+                        include 'conexion.php';
+        
+                        $sql = $conn->query("SELECT * FROM documentos");
+                        while ($resultado = $sql->fetch_assoc()) {
+                            echo "<option value='".$resultado['Id_documento']."'>".$resultado['Tipo_documento']."</option>";
+                        }
+                    ?>
+                </select>
+            </div>
+                      </div>
+            <div class="form-grup">
+              <input type="number" aria-label="documento"name="documento" class="form-control" placeholder="Numero de documento" id="documento" required>
+            </div>
+
                     <div class="form-grup">
                       <label for="exampleInputEmail">Correo electronico</label>
-                      <input type="text" class="form-control" id="exampleInputEmail" placeholder="Escribir Correo electronico">
+                      <input type="text" class="form-control" id="exampleInputEmail" placeholder="Escribir Correo electronico" name="email">
                     </div>
 
                     <div class="form-grup">
                       <label for="exampleInputCel">Celular</label>
-                      <input type="number" class="form-control" id="exampleInputCel" placeholder="Escribir # de celular">
+                      <input type="number" class="form-control" id="exampleInputCel" placeholder="Escribir # de celular" name="celular">
                     </div>
+
+                    <div class="col-md-6">
+              <select class="form-select" name="genero" required>
+                    <option selected disabled>Genero</option>
+                    <?php
+                        include 'conexion.php';
+        
+                        $sql = $conn->query("SELECT * FROM genero");
+                        while ($resultado = $sql->fetch_assoc()) {
+                            echo "<option value='".$resultado['Id_genero']."'>".$resultado['Genero']."</option>";
+                        }
+                    ?>
+                </select>
+            </div>
+
+            <div class="col-md-6">
+              <h6>fecha de nacimiento</h6>
+              <input type="date" id="fecha" name="fecha" required>
+              
+              <script>
+                function mostrarFecha() {
+                  var fecha = document.getElementById("fecha").value;
+                  alert("La fecha seleccionada es: " + fecha);
+                }
+              </script>
+            </div>
 
                   </div>
                 </form>
@@ -191,73 +236,64 @@
         </div>
         <div class="row">
           <div class="col-12">
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">Usuarios Registrados</h3>
-              </div>
               <!-- /.card-header -->
+              <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Estudiantes Registrados</h3>
+              </div>
               <div class="card-body">
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
-                  <tr>
+              <tr>
+                    <th>Id</th>
                     <th>Nombres</th>
                     <th>Apellidos</th>
+                    <th>Tipo documento</th>
+                    <th>Documento</th>
                     <th>Email</th>
-                    <th>Celular</th>
-                    <th>Acciones</th>
+                    <th>Telefono</th>
+                    <th>Genero</th>
+                    <th>Fecha de nacimiento</th>
+                    <th>Jornada</th>
+                    <th>Grado</th>
+                    <th>Grupo</th>
                   </tr>
                   </thead>
                   <tbody>
+                    <?php
+                    require 'conexion.php';
+                
+                    $sql= $conn->query ("SELECT * FROM alumnos 
+                      INNER JOIN documentos ON alumnos.Id_documento = documentos.Id_documento 
+                      INNER JOIN genero ON alumnos.Id_genero = genero.Id_genero 
+                      INNER JOIN jornada ON alumnos.Id_jornada = jornada.Id_jornada 
+	                    INNER JOIN grado ON alumnos.Id_grado = grado.Id_grado 
+	                    INNER JOIN grupo ON alumnos.Id_grupo = grupo.Id_grupo");
+                     
+                     while ($resultado = $sql->fetch_assoc()) {
+
+                    ?>
                   <tr>
-                    <td>Miguel Angel</td>
-                    <td>Villabon Quintero</td>
-                    <td>miguelangelvillabonquintero@gmail.com</td>
-                    <td>3107812453</td>
-                    <td>X</td>
-                  </tr>
-                  <tr>
-                    <td>Trident</td>
-                    <td>Internet
-                      Explorer 5.0
-                    </td>
-                    <td>Win 95+</td>
-                    <td>5</td>
-                    <td>C</td>
-                  </tr>
-                  <tr>
-                    <td>Trident</td>
-                    <td>Internet
-                      Explorer 5.5
-                    </td>
-                    <td>Win 95+</td>
-                    <td>5.5</td>
-                    <td>A</td>
-                  </tr>
-                  <tr>
-                    <td>Trident</td>
-                    <td>Internet
-                      Explorer 6
-                    </td>
-                    <td>Win 98+</td>
-                    <td>6</td>
-                    <td>A</td>
-                  </tr>
-                  <tr>
-                    <td>Trident</td>
-                    <td>Internet Explorer 7</td>
-                    <td>Win XP SP2+</td>
-                    <td>7</td>
-                    <td>A</td>
-                  </tr>
-                  </tfoot>
-                </table>
-              </div>
-              <!-- /.card-body -->
-            </div>
-            <!-- /.card -->
-          </div>
-          <!-- /.col -->
-        </div>
+                        <th scope="row"><?php echo $resultado['Id']?></th>
+                        <th scope="row"><?php echo $resultado['Nombres']?></th>
+                        <th scope="row"><?php echo $resultado['Apellidos']?></th>
+                        <th scope="row"><?php echo $resultado['Tipo_documento']?></th>
+                        <th scope="row"><?php echo $resultado['Documento']?></th>
+                        <th scope="row"><?php echo $resultado['Email']?></th>
+                        <th scope="row"><?php echo $resultado['Telefono']?></th>
+                        <th scope="row"><?php echo $resultado['Genero']?></th>
+                        <th scope="row"><?php echo $resultado['Fecha_nacimiento']?></th>
+                        <th scope="row"><?php echo $resultado['Jornada']?></th>
+                        <th scope="row"><?php echo $resultado['Grado']?></th>
+                        <th scope="row"><?php echo $resultado['Grupo']?></th>
+
+                        <?php
+                     }
+                    ?>
+                    </tr>
+                    </tbody>
+                  </table>
+                  
         <!-- /.row -->
     
       <!-- /.container-fluid -->

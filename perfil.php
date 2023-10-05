@@ -53,7 +53,7 @@
           <a href="perfil.html" class="dropdown-item">
             <i class="fa-solid fa-user"></i>Perfil
           </a>
-          <a href="#" class="dropdown-item dropdown-footer">Salir</a>
+          <a href="index.html" class="dropdown-item dropdown-footer">Salir</a>
         </div>
       </li>
     </ul>
@@ -85,7 +85,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="jsgrid.html" class="nav-link ">
+                <a href="usuarios.php" class="nav-link ">
                   <i class="fa-solid fa-users"></i>
                   <p>
                     Usuarios
